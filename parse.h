@@ -59,5 +59,6 @@ typedef struct _one_AST {
 
 one_AST parse(FILE *);
 void check_type(one_AST);
+void clean_one_AST(one_AST);
 
 #endif
