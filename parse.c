@@ -7,7 +7,6 @@
 one_type new_one_type(enum one_type_base, union one_type_com);
 one_AST new_one_AST(enum one_AST_type, union one_AST_value);
 void clean_one_type(one_type);
-void clean_one_AST(one_AST);
 
 one_type new_one_type(enum one_type_base base, union one_type_com com)
 {
