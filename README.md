@@ -12,7 +12,7 @@ Each .1 file contains 1 one value.
 - Current Function: `@`
 - Function calls: `abs -124` or `-124 | abs`(Pipe)
 - Array: `[2, 4, 8]`
-- Pair: ```37 : `Take That!` ```
+- Pair: ```<37 & `Take That!`> ```
 - Generitic: `?a: elem^a: [elem]`
 - Value in parens: `(abs -990)`
 - None (matches all types): `()`
@@ -21,7 +21,7 @@ Each .1 file contains 1 one value.
 ## Type descriptors
 - `num` (Numbers)
 - `str` (Strings)
-- `num~str` (Functions)
-- `num,str` (Pair)
+- `num:str` (Functions)
+- `<num & str>` (Pair)
 - `(num)` (In parens)
 
