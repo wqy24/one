@@ -1,0 +1,27 @@
+#ifndef __ONE_TOKENS_H__
+#define __ONE_TOKENS_H__
+
+typedef struct {
+  enum {
+    EOF,
+    STR,
+    NUM,
+    REF,
+    IDN,
+    L_BRK,
+    R_BRK,
+    L_PRN,
+    R_PRN,
+    PIPE,
+    CARET,
+    COLON,
+    LT, GT,
+    ET /* & */, AT /* @ */,
+    QUESTION
+  } type,
+  char *value
+} one_token;
+
+one_token read_one_token(FILE *input); /* malloc warning: "value" in the token */
+
+#endif
