@@ -17,6 +17,7 @@ typedef struct {
     PIPE,
     CARET,
     COLON,
+    COMMA,
     LT, GT,
     ET /* & */, AT /* @ */,
     QUESTION
