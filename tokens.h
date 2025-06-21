@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 
-typedef struct {
+typedef struct token {
   enum {
-    EOF,
+    FEOF,
     STR,
     NUM,
     REF,
@@ -21,8 +21,8 @@ typedef struct {
     LT, GT,
     ET /* & */, AT /* @ */,
     QUESTION
-  } type,
-  char *value
+  } type;
+  char *value;
 } one_token;
 
 one_token read_one_token(FILE *input); /* malloc warning: "value" in the token */
