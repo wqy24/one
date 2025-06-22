@@ -65,6 +65,7 @@ one_token read_one_token(FILE *input)
     case '<': return (one_token){LT, NULL};
     case '>': return (one_token){GT, NULL};
     case '?': return (one_token){QUESTION, NULL};
+    case '~': return (one_token){WAVE, NULL};
     case ';':
       while(!feof(input) && getc(input) != '\n') /* do nothing */;
       return read_one_token(input);

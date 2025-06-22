@@ -20,7 +20,8 @@ typedef struct token {
     COMMA,
     LT, GT,
     ET /* & */, AT /* @ */,
-    QUESTION
+    QUESTION,
+    WAVE
   } type;
   char *value;
 } one_token;
