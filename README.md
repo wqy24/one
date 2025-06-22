@@ -21,7 +21,7 @@ Each .1 file contains 1 one value.
 ## Type descriptors
 - `num` (Numbers)
 - `str` (Strings)
-- `num:str` (Functions)
+- `num~str` (Functions)
 - `<num & str>` (Pair)
 - `(num)` (In parens)
 
