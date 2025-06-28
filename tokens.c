@@ -74,7 +74,7 @@ one_token read_one_token(FILE *input)
       if (isspace(curr)) return read_one_token(input);
       if (isdigit(curr) || curr == '-') return (one_token){NUM, read_value(curr, input, pred_num, 0)};
       if (isalpha(curr) || curr == '_') return (one_token){IDN, read_value(curr, input, pred_idn, 0)};
-      fprintf(stderr, "Invalid character %c.", curr);
+      fprintf(stderr, "Invalid character %c.\n", curr);
       exit(EXIT_FAILURE);
   }
 }
