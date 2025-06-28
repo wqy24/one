@@ -5,7 +5,7 @@ One is a programming language. The programs are written to `.1` file.
 Each .1 file contains 1 one value.
 
 ## Values
-- Numbers: `12.3` or `-355/133`
+- Numbers: `12.3`
 - Strings: ``` `Hold it!` ```
 - Comments: `; Objection!`
 - Functions: `param^num: add 1 param`
@@ -16,7 +16,7 @@ Each .1 file contains 1 one value.
 - Generitic: `?a: elem^a: [elem]`
 - Value in parens: `(abs -990)`
 - None (matches all types): `()`
-- Quote: `{$ONE/array/reduce}`
+- Quote: `{array/reduce}`
 
 ## Type descriptors
 - `num` (Numbers)
@@ -24,4 +24,5 @@ Each .1 file contains 1 one value.
 - `num~str` (Functions)
 - `<num & str>` (Pair)
 - `(num)` (In parens)
+- `auto` (Auto-detect)
 
