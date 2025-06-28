@@ -37,6 +37,7 @@ char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 
   res = realloc(res, (plus1 * 2 + count) * sizeof(char));
   strncpy(res + (plus1 + count - 1 - strlen(buffer)), buffer, BUFFER_SIZE);
+  res[plus1 * 2 + count - 1] = '\0';
 
   if (!rm_quote) {
     res[0] = first;
