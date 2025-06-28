@@ -2,18 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define BUFFER_SIZE 32
 
-int pred_ref(char c)
-{
-  return c != '}';
-}
-
-int pred_str(char c)
-{
-  return c != '`';
-}
+int pred_ref(char c) { return c != '}'; }
+int pred_str(char c) { return c != '`'; }
+int pred_num(char c) { return (isdigit(c) || c == '.'); }
+int pred_idn(char c) { return (isalnum(c) || c == '_' || c == '-'); }
 
 char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 {
@@ -51,9 +47,10 @@ char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 
 one_token read_one_token(FILE *input)
 {
+  char curr;
   if (feof(input)) return (one_token){FEOF, NULL};
 
-  switch (getc(input)) {
+  switch (curr = getc(input)) {
     case '@': return (one_token){AT, NULL};
     case '^': return (one_token){CARET, NULL};
     case '&': return (one_token){ET, NULL};
@@ -73,6 +70,11 @@ one_token read_one_token(FILE *input)
     case ',': return (one_token){COMMA, NULL};
     case '{': return (one_token){REF, read_value('{', input, pred_ref, 1)};
     case '`': return (one_token){STR, read_value('`', input, pred_str, 1)};
-    default: return (one_token){FEOF, NULL};
+    default:
+      if (isspace(curr)) return read_one_token(input);
+      if (isdigit(curr) || curr == '-') return (one_token){NUM, read_value(curr, input, pred_num, 0)};
+      if (isalpha(curr) || curr == '_') return (one_token){IDN, read_value(curr, input, pred_idn, 0)};
+      fprintf(stderr, "Invalid character %c.", curr);
+      exit(EXIT_FAILURE);
   }
 }
