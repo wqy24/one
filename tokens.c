@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdint.h>
 
-#define BUFFER_SIZE 32
+#define EXPAND_RATE 32
 
 int pred_ref(char c) { return c != '}'; }
 int pred_str(char c) { return c != '`'; }
@@ -13,33 +14,42 @@ int pred_idn(char c) { return (isalnum(c) || c == '_' || c == '-'); }
 
 char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 {
-  char buffer[BUFFER_SIZE], curr;
-  int count, plus1 = rm_quote ? 0 : 1;
-  char *res = (char *)malloc(plus1 * sizeof(char));
+  size_t size = EXPAND_RATE * sizeof(char);
+  char *buffer = (char *)malloc(size), *res;
+  char c;
+  size_t count = 0;
+  if (!rm_quote) buffer[count++] = first;
 
-  for (count = 1; !feof(input) && pred(curr = getc(input)); count++) {
-    buffer[count - 1] = curr;
-    if (count % BUFFER_SIZE == BUFFER_SIZE - 1) {
-      res = realloc(res, (plus1 + count) * sizeof(char));
-      /* `buffer` is actually full now. Glitch in strncpy is used here. Please ignore the warning of string overflow here. */
-      strncpy(res + (plus1 + count - 1 - BUFFER_SIZE), buffer, BUFFER_SIZE);
+  while ((c = getc(input)) != EOF && pred(c)) {
+    buffer[count++] = c;
+    if (count + 1 >= size) {
+      size += EXPAND_RATE * sizeof(char);
+      char *tmp = realloc(buffer, size);
+      if (tmp == NULL) {
+        fputs("Out of memory\n", stderr);
+        free(buffer);
+        return NULL;
+      }
+      buffer = tmp;
     }
   }
 
-  if (rm_quote && pred(curr)) {
-    fputs("EOF while parsing a token.\n", stderr);
-    exit(EXIT_FAILURE);
+  if (rm_quote && pred(c)) {
+    fputs("EOF while parsing a quoted token\n", stderr);
+    free(buffer);
+    return NULL;
   }
 
-  res = realloc(res, (plus1 * 2 + count) * sizeof(char));
-  strncpy(res + (plus1 + count - 1 - strlen(buffer)), buffer, BUFFER_SIZE);
-  res[plus1 * 2 + count - 1] = '\0';
+  buffer[count] = '\0';
+  res = realloc(buffer, (count + 1) * sizeof(char));
+  if (res == NULL) {
+    fputs("Out of memory\n", stderr);
+    free(buffer);
+    return NULL;
+  }
 
-  if (!rm_quote) {
-    res[0] = first;
-    if (!pred(curr)) {
-      fseek(input, -1, SEEK_CUR);
-    }
+  if (!rm_quote && !pred(c)) {
+    fseek(input, -1, SEEK_CUR);
   }
 
   return res;
@@ -48,9 +58,9 @@ char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 one_token read_one_token(FILE *input)
 {
   char curr;
-  if (feof(input)) return (one_token){FEOF, NULL};
 
   switch (curr = getc(input)) {
+    case EOF: return (one_token){FEOF, NULL};
     case '@': return (one_token){AT, NULL};
     case '^': return (one_token){CARET, NULL};
     case '&': return (one_token){ET, NULL};
