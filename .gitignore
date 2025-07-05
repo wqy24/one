@@ -30,7 +30,7 @@
 
 # Executables
 *.exe
-*.out
+#*.out # used for tests out
 *.app
 *.i*86
 *.x86_64
