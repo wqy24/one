@@ -10,7 +10,7 @@
 int pred_ref(char c) { return c != '}'; }
 int pred_str(char c) { return c != '`'; }
 int pred_num(char c) { return (isdigit(c) || c == '.'); }
-int pred_idn(char c) { return (isalnum(c) || c == '_' || c == '-'); }
+int pred_idn(char c) { return (isalnum(c) || c == '_' || c == '-' || c >> 7 & 1); }
 
 char *read_value(char first, FILE *input, int (*pred)(char), int rm_quote)
 {
@@ -83,7 +83,7 @@ one_token read_one_token(FILE *input)
     default:
       if (isspace(curr)) return read_one_token(input);
       if (isdigit(curr) || curr == '-') return (one_token){NUM, read_value(curr, input, pred_num, 0)};
-      if (isalpha(curr) || curr == '_') return (one_token){IDN, read_value(curr, input, pred_idn, 0)};
+      if (isalpha(curr) || curr == '_' || curr >> 7 & 1) return (one_token){IDN, read_value(curr, input, pred_idn, 0)};
       fprintf(stderr, "Invalid character %c.\n", curr);
       exit(EXIT_FAILURE);
   }
