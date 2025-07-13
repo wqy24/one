@@ -1,13 +1,13 @@
 #ifndef __ONE_PARSE_H__
 #define __ONE_PARSE_H__
 
-#include <mpfr.h>
+#include <mpdecimal.h>
 #include <stdio.h>
 #include <stdint.h>
 
 typedef struct _one_type {
   enum one_type_base {
-    NUM_T, STR_T, AUTO, FN_T, PAIR_T
+    NUM_T, STR_T, AUTO, GEN, FN_T, PAIR_T
   } base;
 
   union one_type_com{
@@ -20,16 +20,18 @@ typedef struct _one_type {
       struct _one_type *left;
       struct _one_type *right;
     } pair;
+
+    struct _one_type *gen;
   } com;
 } *one_type;
 
 typedef struct _one_AST {
   enum one_AST_type {
-    NUM, STR, REF, PARAM, FN, FNCALL, PAIR
+    LIT_NUM, LIT_STR, LIT_REF, PARAM, FN, FNCALL, PAIR, ARRAY, NONE
   } type;
 
   union one_AST_value{
-    mpfr_t num; char *str; FILE *ref; uint32_t param;
+    mpd_t num; char *str; FILE *ref; uint32_t param;
 
     struct one_AST_fn {
       one_type param_type;
@@ -52,6 +54,11 @@ typedef struct _one_AST {
       struct _one_AST *right;
     } pair;
 
+    struct one_array {
+      struct _one_AST *curr;
+      struct one_array *next;
+    } array;
+
   } value;
 } *one_AST;
 
@@ -60,5 +67,6 @@ one_AST new_one_AST(enum one_AST_type, union one_AST_value);
 void clean_one_type(one_type);
 void clean_one_AST(one_AST);
 one_AST parse(FILE *);
+void check_type(one_AST);
 
 #endif
