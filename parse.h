@@ -36,12 +36,7 @@ typedef struct _one_AST {
     struct one_AST_fn {
       one_type param_type;
       struct _one_AST *res;
-
-      struct one_AST_cls {
-        struct _one_AST *arg;
-        struct one_AST_cls *up;
-      } *closure;
-
+      struct one_AST *up;
     } fn;
 
     struct one_AST_fncall {
