@@ -18,15 +18,6 @@ one_type new_one_type(enum one_type_base base, union one_type_com com)
   return res;
 }
 
-struct one_AST_cls *new_cls(one_AST arg, struct one_AST_cls *up)
-{
-  struct one_AST_cls *res = malloc(sizeof(struct one_AST_cls));
-  check_mem(res);
-  res->arg = arg;
-  res->up = up;
-  return res;
-}
-
 struct one_array *new_array(struct one_array *prev, one_AST curr)
 {
   struct one_array *res = malloc(sizeof(struct one_array));
@@ -64,12 +55,6 @@ void clean_one_type(one_type type)
   free(type);
 }
 
-void clean_cls(struct one_AST_cls *cls) {
-  if (cls->up) clean_cls(cls->up);
-  clean_one_AST(cls->arg);
-  free(cls);
-}
-
 void clean_array(struct one_array *arr)
 {
   clean_one_AST(arr->curr);
@@ -79,7 +64,7 @@ void clean_array(struct one_array *arr)
 
 void clean_one_AST(one_AST ast)
 {
-  switch (ast.type) {
+  switch (ast->type) {
     case LIT_STR:
       free(ast->value.str);
       break;
@@ -89,7 +74,7 @@ void clean_one_AST(one_AST ast)
     case FN:
       clean_one_type(ast->value.fn.param_type);
       clean_one_AST(ast->value.fn.res);
-      clean_cls(ast->value.fn.closure);
+      clean_one_AST(ast->value.fn.up);
       break;
     case FNCALL:
       clean_one_AST(ast->value.fncall.fn);
