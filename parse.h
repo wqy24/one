@@ -32,7 +32,7 @@ typedef struct _one_AST {
   } type;
 
   union one_AST_value{
-    char *num; char *str; FILE *ref; uint32_t param;
+    char *num; char *str; char *ref; uint32_t param;
 
     struct one_AST_fn {
       one_type param_type;

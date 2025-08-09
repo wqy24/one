@@ -72,7 +72,7 @@ void clean_one_AST(one_AST ast)
       free(ast->value.str);
       break;
     case LIT_REF:
-      fclose(ast->value.ref);
+      free(ast->value.ref);
       break;
     case FN:
       clean_one_type(ast->value.fn.param_type);
@@ -224,7 +224,7 @@ one_AST simple_ASTfy(one_token token, struct token_queue queue, one_AST context)
     case STR:
       return new_one_AST(LIT_STR, (union one_AST_value){.str = token.value});
     case REF:
-      return new_one_AST(LIT_REF, (union one_AST_value){.ref = fopen(token.value, "r")});
+      return new_one_AST(LIT_REF, (union one_AST_value){.ref = token.value});
     case L_PRN:
       one_token peek_prn = pop(queue);
       if (peek_prn.type == R_PRN) return new_one_AST(NONE, (union one_AST_value){});
