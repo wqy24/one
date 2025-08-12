@@ -61,7 +61,7 @@ one_token read_one_token(FILE *input)
 
   switch (curr = getc(input)) {
     case EOF: return (one_token){FEOF, NULL};
-    case '@': return (one_token){AT, NULL};
+    //case '@': return (one_token){AT, NULL};
     case '^': return (one_token){CARET, NULL};
     case '&': return (one_token){ET, NULL};
     case '(': return (one_token){L_PRN, NULL};

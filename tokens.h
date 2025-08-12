@@ -19,7 +19,7 @@ typedef struct token {
     COLON,
     COMMA,
     LT, GT,
-    ET /* & */, AT /* @ */,
+    ET /* & */, // AT /* @ */,
     QUESTION,
     WAVE
   } type;

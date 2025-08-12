@@ -43,9 +43,9 @@ int main(int argc, char **argv)
       case WAVE:
         without_value("WAVE", curr);
         break;
-      case AT:
+      /*case AT:
         without_value("AT", curr);
-        break;
+        break;*/
       case ET:
         without_value("ET", curr);
         break;

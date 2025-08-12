@@ -9,7 +9,6 @@ Each .1 file contains 1 one value.
 - Strings: ``` `Hold it!` ```
 - Comments: `; Objection!`
 - Functions: `param^num: add 1 param`
-- Current Function: `@`
 - Function calls: `abs -124` or `-124 | abs`(Pipe)
 - Array: `[2, 4, 8]`
 - Pair: ```<37 & `Take That!`> ```

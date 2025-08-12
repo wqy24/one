@@ -1,7 +1,7 @@
 12.3
 `Hold it!` 
 ; Objection!`
-param^num: add 1 param@
+param^num: add 1 param;@
 abs -124 -124| abs [2,4,8]
 ?a: elem^a: [elem]
 (abs -990)

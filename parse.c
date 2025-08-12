@@ -200,7 +200,7 @@ one_AST parse_recur(struct token_queue queue, one_AST left, one_AST context)
   switch ((op = pop(queue)).type) {
     case NUM: case STR: case REF:
     case L_PRN: case L_BRK: case LT:
-    case AT: case IDN: case QUESTION:
+    /*case AT:*/ case IDN: case QUESTION:
       return parse_recur(queue, new_one_AST(FNCALL,
         (union one_AST_value){
           .fncall = (struct one_AST_fncall){left, simple_ASTfy(op, queue, context)}
@@ -248,10 +248,12 @@ one_AST simple_ASTfy(one_token token, struct token_queue queue, one_AST context)
       one_AST pair_right = parse_recur(queue, simple_ASTfy(pop(queue), queue, context), context);
       check(pop(queue).type == GT, "A pair should end with `>`");
       return new_one_AST(PAIR, (union one_AST_value){.pair = (struct one_AST_pair){pair_left, pair_right}});
+#if 0
     case AT:
       one_AST ctx;
       for (ctx = context; ctx->type != FN; ctx = up(ctx));
       return ctx;
+#endif
     case IDN:
       one_token next = queue.curr;
       if (next.type == CARET) {
