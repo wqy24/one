@@ -8,20 +8,22 @@ Each .1 file contains 1 one value.
 - Numbers: `12.3`
 - Strings: ``` `Hold it!` ```
 - Comments: `; Objection!`
-- Functions: `param^num: add 1 param`
+- Functions: `param: add 1 param`
 - Function calls: `abs -124` or `-124 | abs`(Pipe)
 - Array: `[2, 4, 8]`
 - Pair: ```<37 & `Take That!`> ```
-- Generitic: `?a: elem^a: [elem]`
+- Lisp-like list: ```<37, `Take That`>```
+- Improper list: ```<27, 37 & `Take That`>```
 - Value in parens: `(abs -990)`
 - None (matches all types): `()`
-- Quote: `{array/reduce}`
+- References: `{array/reduce}`
 
-## Type descriptors
-- `num` (Numbers)
-- `str` (Strings)
-- `num~str` (Functions)
-- `<num & str>` (Pair)
-- `(num)` (In parens)
-- `auto` (Auto-detect)
-
+# Attention!
+One is static typed. But all types will be auto-detected.
+Here are types.
+## Base
+- Numbrs
+- Strings
+## Composed
+- Functions: param, result
+- Pairs: car, cdr (Wow, it's lisp!) 
