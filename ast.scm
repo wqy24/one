@@ -40,9 +40,11 @@
     [(eqv? next-ch #\>) (token-stream 'arrow)]
     [(or (eqv? next-ch #\-) (char-numeric? next-ch))
      (token-stream (read-when (read-number) (string next-ch) port))]
-    [else (error "Not Implemented yet") #| It will raise an error - in an unexcepted way|#])))
+    [else (error "Not Implemented yet") #| It will raise an error - in raising an error |#])))
 
  (a-token))
+
+; Use pairs and null to express AST so that we can express the AST in 1 the Programming language
 
 (define-syntax ast-call
  (syntax-rules ()
