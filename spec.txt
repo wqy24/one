@@ -1,0 +1,11 @@
+numbers: 122.45
+string: "say \"Hello\""
+vals in paren: (1)
+none: ()
+fncall: `a` b
+pipe: b > `a`
+fn: a: b: `+` a b
+ref: `mod/fn`
+list: [1, 2, 4, 5]
+list (improper): [1, 2 & 3]
+use of macro: % syntax %
