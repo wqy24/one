@@ -34,9 +34,13 @@
     [(eqv? next-ch #\]) (token-stream 'rbrk)]
     [(eqv? next-ch #\() (token-stream 'lprn)]
     [(eqv? next-ch #\)) (token-stream 'rprn)]
+    [(eqv? next-ch #\,) (token-stream 'comma)]
+    [(eqv? next-ch #\&) (token-stream 'et)]
+    [(eqv? next-ch #\:) (token-stream 'colon)]
+    [(eqv? next-ch #\>) (token-stream 'arrow)]
     [(or (eqv? next-ch #\-) (char-numeric? next-ch))
      (token-stream (read-when (read-number) (string next-ch) port))]
-    [else (error "Not Implemented yet")])))
+    [else (error "Not Implemented yet") #| It will raise an error - in an unexcepted way|#])))
 
  (a-token))
 
