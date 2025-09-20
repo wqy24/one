@@ -8,4 +8,4 @@ fn: a: b: `+` a b
 ref: `mod/fn`
 list: [1, 2, 4, 5]
 list (improper): [1, 2 & 3]
-use of macro: % syntax %
+
