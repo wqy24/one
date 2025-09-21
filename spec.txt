@@ -2,10 +2,11 @@ numbers: 122.45
 string: "say \"Hello\""
 vals in paren: (1)
 none: ()
-fncall: `a` b
-pipe: b > `a`
-fn: a: b: `+` a b
+fncall: fn arg
+pipe: arg > fn
+fn: (a: b: `num/add` a b)
 ref: `mod/fn`
 list: [1, 2, 4, 5]
 list (improper): [1, 2 & 3]
-
+macro: %a: `macro/quote` %b: `macro/quote` (`macro/unquote` a > `num/add` (`macro/unquote` b))
+or: `macro/alias` ': ~: %a: ' %b: ' (~ a > `num/add` (~ b))
