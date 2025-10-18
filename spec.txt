@@ -1,12 +1,12 @@
 numbers: 122.45
 string: "say \"Hello\""
 vals in paren: (1)
-none: ()
 fncall: fn arg
 pipe: arg > fn
 fn: (a: b: `num/add` a b)
 ref: `mod/fn`
 list: [1, 2, 4, 5]
-list (improper): [1, 2 & 3]
-macro: %a: `macro/quote` %b: `macro/quote` (`macro/unquote` a > `num/add` (`macro/unquote` b))
-or: `macro/alias` ': ~: %a: ' %b: ' (~ a > `num/add` (~ b))
+symbol: %symbol
+enum template: {%a, %b=1, %c=1: 2} ; give a value to express this option has a value and we can detect type from it;
+enum val: `enum/op` template %a OR `enum/val` template %b 3
+use of enum: `enum/switch`[[a, 1] [b, (x: `num/add` x 1)] [c, x: 0]]

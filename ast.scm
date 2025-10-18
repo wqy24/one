@@ -38,26 +38,14 @@
     [(eqv? next-ch #\&) (token-stream 'et)]
     [(eqv? next-ch #\:) (token-stream 'colon)]
     [(eqv? next-ch #\>) (token-stream 'arrow)]
+    ;[(eqv? next-ch #\`) (token-stream (read-when (read-ref) ""))]
     [(or (eqv? next-ch #\-) (char-numeric? next-ch))
      (token-stream (read-when (read-number) (string next-ch) port))]
-    [else (error "Not Implemented yet") #| It will raise an error - in raising an error |#])))
+    [else (error "Syntax Error" "Not Implemented yet")])))
 
  (a-token))
 
-; Use pairs and null to express AST so that we can express the AST in 1 the Programming language
+; Express the AST in 1 the Programming language
 
-(define-syntax ast-call
- (syntax-rules ()
-  [(_ fn arg) `(((,fn . ,arg) . ()) . (() . ()))]))
-
-(define-syntax ast-fn
- (syntax-rules ()
-  [(_ ast) `((() . ,ast) . (() . ()))]))
-
-(define-syntax ast-param
- (syntax-rules ()
-  [(_ layer) `((() . ()) . (,layer . ()))]))
-
-(define-syntax ast-literal
- (syntax-rules ()
-  [(_ value) `((() . ()) . (() . ,value))]))
+(define (ast type content)
+ (cons type content)
